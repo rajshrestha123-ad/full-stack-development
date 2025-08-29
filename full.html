@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raj Shrestha - Full Stack Developer | BI95MT</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3a86ff;
+            --secondary: #8338ec;
+            --accent: #ff006e;
+            --dark: #14213d;
+            --light: #f8f9fa;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand, .nav-link {
+            color: var(--dark) !important;
+            font-weight: 600;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary) !important;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.1' d='M0,224L48,213.3C96,203,192,181,288,160C384,139,480,117,576,122.7C672,128,768,160,864,170.7C960,181,1056,171,1152,165.3C1248,160,1344,160,1392,160L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: bottom;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(58, 134, 255, 0.3);
+        }
+        
+        .calc-btn {
+            height: 60px;
+            background: white;
+            border: 1px solid #e9ecef;
+            color: var(--dark);
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+        
+        .calc-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .calc-display {
+            background: var(--dark);
+            height: 80px;
+            font-size: 2rem;
+            font-weight: 600;
+            color: white;
+            border-radius: 10px;
+            border: none;
+        }
+        
+        #animationBox {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Code Example Styling */
+        .code-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-x: auto;
+            margin: 20px 0;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .code-example pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+
+        .code-title {
+            background: rgba(99, 102, 241, 0.2);
+            color: #a5b4fc;
+            padding: 8px 15px;
+            margin: -20px -20px 15px -20px;
+            border-radius: 15px 15px 0 0;
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+        
+        .student-id {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        
+        /* Animation for elements */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 5s ease-in-out infinite;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">Raj Shrestha <span class="student-id">BI95MT</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#fullstack">Full Stack</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#html">HTML</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#css">CSS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#bootstrap">Bootstrap</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#javascript">JavaScript</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home" class="hero">
+        <div class="container text-center">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 floating">
+                    <h1 class="display-4 fw-bold mb-4">Raj Shrestha</h1>
+                    <h2 class="h3 mb-4">Full Stack Developer</h2>
+                    <p class="lead mb-4">
+                        Creating innovative digital experiences with cutting-edge technologies. 
+                        Passionate about building seamless user interfaces and robust server architectures.
+                    </p>
+                    <div class="d-flex justify-content-center align-items-center mb-4">
+                        <span class="badge bg-light text-dark me-2">HTML5</span>
+                        <span class="badge bg-light text-dark me-2">CSS3</span>
+                        <span class="badge bg-light text-dark me-2">JavaScript</span>
+                        <span class="badge bg-light text-dark me-2">Bootstrap</span>
+                        <span class="badge bg-light text-dark">Node.js</span>
+                    </div>
+                    <a href="#fullstack" class="btn btn-light btn-lg">
+                        <i class="fas fa-code me-2"></i>View My Skills
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Full Stack Section -->
+    <section id="fullstack" class="py-5" style="background: white;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="display-5 fw-bold mb-3 section-title">Full Stack Development</h2>
+                    <p class="lead">End-to-end web application development expertise</p>
+                </div>
+            </div>
+            
+            <div class="card mb-4 border-0">
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-layer-group fa-3x mb-3" style="background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+                        <h3>Comprehensive Web Development</h3>
+                        <p>Full Stack Development combines frontend and backend technologies to create complete web solutions.</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 text-center border-0">
+                                <div class="card-body">
+                                    <i class="fas fa-paint-brush fa-2x mb-3" style="color: var(--primary);"></i>
+                                    <h5>Frontend Development</h5>
+                                    <p>Creating responsive and interactive user interfaces with modern frameworks</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 text-center border-0">
+                                <div class="card-body">
+                                    <i class="fas fa-server fa-2x mb-3" style="color: var(--secondary);"></i>
+                                    <h5>Backend Development</h5>
+                                    <p>Building robust server-side applications and RESTful APIs</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 text-center border-0">
+                                <div class="card-body">
+                                    <i class="fas fa-database fa-2x mb-3" style="color: var(--accent);"></i>
+                                    <h5>Database Management</h5>
+                                    <p>Designing and optimizing database systems for performance</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HTML Section -->
+    <section id="html" class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="display-5 fw-bold mb-3 section-title">HTML Mastery</h2>
+                    <p class="lead">Structuring content with semantic markup</p>
+                </div>
+            </div>
+            
+            <div class="card border-0">
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <i class="fab fa-html5 fa-3x mb-3" style="color: #e34f26;"></i>
+                        <h3>HTML5 & Semantic Elements</h3>
+                        <p>Modern HTML provides meaningful structure to web content.</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Element Generator</h5>
+                            <div class="mb-3">
+                                <label class="form-label">Element Type:</label>
+                                <select id="elementType" class="form-select">
+                                    <option value="h1">Heading 1</option>
+                                    <option value="p">Paragraph</option>
+                                    <option value="button">Button</option>
+                                    <option value="div">Div Container</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Content:</label>
+                                <input type="text" id="elementContent" class="form-control" placeholder="Enter content">
+                            </div>
+                            <button class="btn btn-primary" onclick="generateElement()">Generate Element</button>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Preview:</h5>
+                            <div id="htmlPreview" class="border rounded p-3" style="min-height: 150px; background: var(--light);">
+                                <!-- Generated elements appear here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- HTML Code Example -->
+                    <div class="code-example mt-4">
+                        <div class="code-title">HTML Example</div>
+                        <pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My Portfolio&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;h1&gt;Raj Shrestha&lt;/h1&gt;
+        &lt;nav&gt;
+            &lt;a href="#home"&gt;Home&lt;/a&gt;
+            &lt;a href="#projects"&gt;Projects&lt;/a&gt;
+        &lt;/nav&gt;
+    &lt;/header&gt;
+    
+    &lt;main&gt;
+        &lt;section id="about"&gt;
+            &lt;h2&gt;About Me&lt;/h2&gt;
+            &lt;p&gt;Full Stack Developer with expertise in modern web technologies.&lt;/p&gt;
+            &lt;img src="profile.jpg" alt="Raj Shrestha"&gt;
+        &lt;/section&gt;
+    &lt;/main&gt;
+    
+    &lt;footer&gt;
+        &lt;p&gt;© 2024 Raj Shrestha | BI95MT&lt;/p&gt;
+    &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CSS Section -->
+    <section id="css" class="py-5" style="background: white;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="display-5 fw-bold mb-3 section-title">CSS Styling</h2>
+                    <p class="lead">Transforming designs into beautiful interfaces</p>
+                </div>
+            </div>
+            
+            <div class="card border-0">
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <i class="fab fa-css3-alt fa-3x mb-3" style="color: #264de4;"></i>
+                        <h3>Modern CSS Techniques</h3>
+                        <p>Advanced CSS enables complex layouts, animations, and responsive designs.</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Animation Controls</h5>
+                            <div class="mb-3">
+                                <label class="form-label">Animation Type:</label>
+                                <select id="animationType" class="form-select" onchange="updateAnimation()">
+                                    <option value="bounce">Bounce</option>
+                                    <option value="rotate">Rotate</option>
+                                    <option value="pulse">Pulse</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Duration: <span id="durationValue">2s</span></label>
+                                <input type="range" id="animationDuration" min="1" max="5" value="2" class="form-range" oninput="updateAnimation()">
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex align-items-center justify-content-center">
+                            <div id="animationBox"></div>
+                        </div>
+                    </div>
+
+                    <!-- CSS Code Example -->
+                    <div class="code-example mt-4">
+                        <div class="code-title">CSS Example</div>
+                        <pre>/* Modern CSS Styling */
+:root {
+    --primary: #3a86ff;
+    --secondary: #8338ec;
+    --accent: #ff006e;
+    --dark: #14213d;
+    --light: #f8f9fa;
+}
+
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.btn-primary {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    border: none;
+    border-radius: 50px;
+    padding: 12px 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(58, 134, 255, 0.3);
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-15px);
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap Section -->
+    <section id="bootstrap" class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="display-5 fw-bold mb-3 section-title">Bootstrap Framework</h2>
+                    <p class="lead">Rapid development with responsive components</p>
+                </div>
+            </div>
+            
+            <div class="card border-0">
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <i class="fab fa-bootstrap fa-3x mb-3" style="color: #7952b3;"></i>
+                        <h3>Bootstrap Components</h3>
+                        <p>Quickly build responsive sites with Bootstrap's extensive component library.</p>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Component Generator</h5>
+                            <div class="mb-3">
+                                <label class="form-label">Component:</label>
+                                <select id="componentType" class="form-select" onchange="generateComponent()">
+                                    <option value="alert">Alert</option>
+                                    <option value="card">Card</option>
+                                    <option value="button">Button</option>
+                                    <option value="badge">Badge</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Style:</label>
+                                <select id="componentStyle" class="form-select" onchange="generateComponent()">
+                                    <option value="primary">Primary</option>
+                                    <option value="success">Success</option>
+                                    <option value="warning">Warning</option>
+                                    <option value="danger">Danger</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Generated Component:</h5>
+                            <div id="componentPreview" class="border rounded p-3" style="min-height: 150px; background: var(--light);">
+                                <!-- Generated components appear here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bootstrap Code Example -->
+                    <div class="code-example mt-4">
+                        <div class="code-title">Bootstrap Example</div>
+                        <pre>&lt;!-- Bootstrap Components --&gt;
+&lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+        &lt;div class="col-md-6 col-lg-4"&gt;
+            &lt;div class="card"&gt;
+                &lt;div class="card-body"&gt;
+                    &lt;h5 class="card-title"&gt;Project Title&lt;/h5&gt;
+                    &lt;p class="card-text"&gt;
+                        A responsive web application built with Bootstrap.
+                    &lt;/p&gt;
+                    &lt;a href="#" class="btn btn-primary"&gt;View Project&lt;/a&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="col-md-6 col-lg-8"&gt;
+            &lt;div class="alert alert-success" role="alert"&gt;
+                &lt;h4 class="alert-heading"&gt;Well done!&lt;/h4&gt;
+                &lt;p&gt;You successfully completed the project.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;button type="button" class="btn btn-primary me-2"&gt;
+                Primary Button
+            &lt;/button&gt;
+            &lt;span class="badge bg-secondary"&gt;New&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JavaScript Section -->
+    <section id="javascript" class="py-5" style="background: white;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-5">
+                    <h2 class="display-5 fw-bold mb-3 section-title">JavaScript Programming</h2>
+                    <p class="lead">Creating dynamic and interactive web experiences</p>
+                </div>
+            </div>
+            
+            <div class="card border-0">
+                <div class="card-body">
+                    <div class="text-center mb-4">
+                        <i class="fab fa-js-square fa-3x mb-3" style="color: #f7df1e;"></i>
+                        <h3>Interactive Calculator</h3>
+                        <p>JavaScript enables dynamic user interactions and complex application logic.</p>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <div class="calc-display d-flex align-items-center justify-content-end p-3 mb-3 rounded" id="calcDisplay">0</div>
+                            <div class="row g-2">
+                                <div class="col-3"><button class="btn calc-btn w-100" onclick="clearCalc()">C</button></div>
+                                <div class="col-3"><button class="btn calc-btn w-100" onclick="deleteLast()">⌫</button></div>
+                                <div class="col-3"><button class="btn calc-btn w-100" onclick="inputOperator('/')">/</button></div>
+                                <div class="col-3"><button class="btn calc-btn w-100" onclick="inputOperator('*')">×</button></div>
+                                
+                                <div class="col-3"><button class="btn calc-btn w-100" onclick="inputNumber('7')">7</button></div>
+                                <div class="col-3"><button class="btn calc-btn w-100" onclick="inputNumber('8')">8</button></div>
+                                <div class="col-3"><button class="btn calc-btn w-100" onclick="inputNumber('9')">9</button></div>
+                                <div class="col-3"><button class="btn calc-btn w-100" onclick="inputOperator('-')">-</button></div>
+                                
+                                <div class="col-3"><button class="btn calc-btn w-100" onclick="inputNumber('4')">4</button></div>
+                                <div class="col-3"><button class="btn calc-btn w-100" onclick="inputNumber('5')">5</button></div>
+                                <div class="col-3"><button class="btn calc-btn w-100" onclick="inputNumber('6')">6</button></div>
+                                <div class="col-3"><button class="btn calc-btn w-100 bg-primary text-white" onclick="inputOperator('+')">+</button></div>
+                                
+                                <div class="col-3"><button class="btn calc-btn w-100" onclick="inputNumber('1')">1</button></div>
+                                <div class="col-3"><button class="btn calc-btn w-100" onclick="inputNumber('2')">2</button></div>
+                                <div class="col-3"><button class="btn calc-btn w-100" onclick="inputNumber('3')">3</button></div>
+                                <div class="col-3"><button class="btn calc-btn w-100 text-white" onclick="calculate()" style="background: linear-gradient(to right, var(--primary), var(--secondary)); grid-row: span 2; height: 126px;">=</button></div>
+                                
+                                <div class="col-6"><button class="btn calc-btn w-100" onclick="inputNumber('0')">0</button></div>
+                                <div class="col-3"><button class="btn calc-btn w-100" onclick="inputNumber('.')">.</button></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- JavaScript Code Example -->
+                    <div class="code-example mt-4">
+                        <div class="code-title">JavaScript Example</div>
+                        <pre>// Interactive JavaScript Features
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize animations
+    initAnimations();
+    
+    // Initialize calculator
+    initCalculator();
+    
+    // Initialize interactive examples
+    initExamples();
+});
+
+function initAnimations() {
+    // Set up scroll animations
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+            }
+        });
+    }, observerOptions);
+    
+    // Observe all sections for animation
+    document.querySelectorAll('section').forEach(section => {
+        observer.observe(section);
+    });
+}
+
+function initCalculator() {
+    // Calculator functionality
+    let currentValue = 0;
+    let previousValue = null;
+    let operation = null;
+    
+    function updateDisplay(value) {
+        document.getElementById('calcDisplay').textContent = value;
+    }
+    
+    function inputNumber(num) {
+        if (currentValue === 0 || currentValue === '0') {
+            currentValue = num;
+        } else {
+            currentValue += num;
+        }
+        updateDisplay(currentValue);
+    }
+    
+    // Additional calculator functions would be here
+}
+
+function initExamples() {
+    // Initialize interactive code examples
+    console.log('Interactive examples initialized');
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center">
+        <div class="container">
+            <p class="mb-2">Raj Shrestha | Full Stack Developer</p>
+            <p class="mb-0">Student ID: <strong>BI95MT</strong></p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // HTML Element Generator
+        function generateElement() {
+            const type = document.getElementById('elementType').value;
+            const content = document.getElementById('elementContent').value || 'Sample Content';
+            const preview = document.getElementById('htmlPreview');
+            
+            const element = document.createElement(type);
+            element.textContent = content;
+            
+            if (type === 'button') {
+                element.className = 'btn btn-primary';
+            } else {
+                element.style.cssText = 'margin: 0.5rem 0; padding: 0.5rem; background: rgba(58, 134, 255, 0.1); border-radius: 4px;';
+            }
+            
+            preview.appendChild(element);
+        }
+
+        // CSS Animation
+        function updateAnimation() {
+            const type = document.getElementById('animationType').value;
+            const duration = document.getElementById('animationDuration').value;
+            const box = document.getElementById('animationBox');
+            
+            document.getElementById('durationValue').textContent = duration + 's';
+            
+            box.style.animation = `${type} ${duration}s infinite`;
+        }
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes bounce {
+                0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+                40% { transform: translateY(-30px); }
+                60% { transform: translateY(-15px); }
+            }
+            @keyframes rotate {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.2); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Bootstrap Component Generator
+        function generateComponent() {
+            const type = document.getElementById('componentType').value;
+            const style = document.getElementById('componentStyle').value;
+            const preview = document.getElementById('componentPreview');
+            
+            let html = '';
+            
+            switch (type) {
+                case 'alert':
+                    html = `<div class="alert alert-${style} alert-dismissible fade show">
+                        <strong>${style.charAt(0).toUpperCase() + style.slice(1)}!</strong> This is a ${style} alert.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>`;
+                    break;
+                case 'card':
+                    html = `<div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title text-${style}">Card Title</h5>
+                            <p class="card-text">This is a sample ${style} card component with some example text.</p>
+                            <a href="#" class="btn btn-${style}">Action</a>
+                        </div>
+                    </div>`;
+                    break;
+                case 'button':
+                    html = `<button class="btn btn-${style} me-2">Primary</button>
+                    <button class="btn btn-outline-${style}">Outline</button>`;
+                    break;
+                case 'badge':
+                    html = `<span class="badge bg-${style} me-2">Primary</span>
+                    <span class="badge rounded-pill bg-${style}">Pill</span>`;
+                    break;
+            }
+            
+            preview.innerHTML = html;
+        }
+
+        // Calculator
+        let calcDisplay = '0';
+        let calcPrevious = null;
+        let calcOperation = null;
+        let calcWaitingForOperand = false;
+
+        function updateCalcDisplay() {
+            document.getElementById('calcDisplay').textContent = calcDisplay;
+        }
+
+        function inputNumber(num) {
+            if (calcWaitingForOperand) {
+                calcDisplay = num;
+                calcWaitingForOperand = false;
+            } else {
+                calcDisplay = calcDisplay === '0' ? num : calcDisplay + num;
+            }
+            updateCalcDisplay();
+        }
+
+        function inputOperator(nextOperator) {
+            const inputValue = parseFloat(calcDisplay);
+
+            if (calcPrevious === null) {
+                calcPrevious = inputValue;
+            } else if (calcOperation) {
+                const result = performCalculation[calcOperation](calcPrevious, inputValue);
+                calcDisplay = String(result);
+                calcPrevious = result;
+                updateCalcDisplay();
+            }
+
+            calcWaitingForOperand = true;
+            calcOperation = nextOperator;
+        }
+
+        const performCalculation = {
+            '/': (prev, next) => prev / next,
+            '*': (prev, next) => prev * next,
+            '+': (prev, next) => prev + next,
+            '-': (prev, next) => prev - next,
+        };
+
+        function calculate() {
+            const inputValue = parseFloat(calcDisplay);
+
+            if (calcPrevious !== null && calcOperation) {
+                const result = performCalculation[calcOperation](calcPrevious, inputValue);
+                calcDisplay = String(result);
+                calcPrevious = null;
+                calcOperation = null;
+                calcWaitingForOperand = true;
+                updateCalcDisplay();
+            }
+        }
+
+        function clearCalc() {
+            calcDisplay = '0';
+            calcPrevious = null;
+            calcOperation = null;
+            calcWaitingForOperand = false;
+            updateCalcDisplay();
+        }
+
+        function deleteLast() {
+            calcDisplay = calcDisplay.length > 1 ? calcDisplay.slice(0, -1) : '0';
+            updateCalcDisplay();
+        }
+
+        // Initialize
+        updateAnimation();
+        generateComponent();
+        updateCalcDisplay();
+    </script>
+
+</body>
+</html>
